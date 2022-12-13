@@ -85,6 +85,27 @@ view: order_items {
     sql: ${TABLE}.sale_price ;;
   }
 
+  dimension: is_item_returned {
+    type: yesno
+    sql: ${returned_date} IS NOT NULL ;;
+  }
+
+  measure: total_gross_revenue{
+    description: "Total revenue from completed sales (cancelled and returned orders excluded) "
+    type: sum
+    sql: ${sale_price};;
+    filters: [is_item_returned: "No"]
+    value_format_name: usd_0
+  }
+
+  measure: total_gross_margin {
+    description: "Amount Total difference between the total revenue from completed sales and the cost of the goods that were sold "
+    type: number
+    sql: ${total_gross_revenue} - ${inventory_items.total_cost} ;;
+    value_format_name: usd_0
+  }
+
+
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
@@ -123,6 +144,43 @@ view: order_items {
     type: count
     drill_fields: [detail*]
   }
+
+  measure: total_items_returned {
+    description: "Number of items that were returned by dissatisfied customers "
+    type: count
+    filters: [is_item_returned: "Yes"]
+  }
+
+
+  measure: average_gross_margin {
+    description: "Average difference between the total revenue from completed sales and the cost of the goods that were sold "
+    type: number
+    sql: ${total_gross_margin}/${count} ;;
+    value_format_name: usd_0
+  }
+
+  measure: gross_margin_percenatage {
+    description: "Total Gross Margin Amount / Total Gross Revenue "
+    type: number
+    sql:100.0 * ${total_gross_margin}/ nullif(${total_gross_revenue}, 0) ;;
+    value_format: "0.00\%"
+  }
+
+  measure: items_return_rate {
+    description: "Number of Items Returned / total number of items sold"
+    type: number
+    sql: 100.0 * ${total_items_returned}/ ${count} ;;
+    value_format: "0.00\%"
+  }
+
+  measure: total_customers_with_returned_items {
+    description: "Number of users who have returned an item at some point"
+    type: count_distinct
+    sql: ${user_id} ;;
+    filters: [is_item_returned: "Yes"]
+  }
+
+
 
   # ----- Sets of fields for drilling ------
   set: detail {
