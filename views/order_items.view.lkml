@@ -182,7 +182,7 @@ view: order_items {
 
 
 
-  # ----- Sets of fields for drilling ------
+  #  Sets of fields for drilling
   set: detail {
     fields: [
       id,
