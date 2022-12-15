@@ -101,6 +101,7 @@ view: order_items {
   measure: total_gross_margin {
     description: "Amount Total difference between the total revenue from completed sales and the cost of the goods that were sold "
     type: sum
+    drill_fields: [inventory_items.product_brand, inventory_items.product_category]
     sql: ${order_items.sale_price} - ${inventory_items.cost} ;;
     value_format_name: usd_0
   }

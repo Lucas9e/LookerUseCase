@@ -110,6 +110,7 @@ view: users {
 
   dimension: state {
     type: string
+    map_layer_name: us_states
     sql: ${TABLE}.state ;;
   }
 
@@ -121,6 +122,7 @@ view: users {
   dimension: traffic_source {
     type: string
     sql: ${TABLE}.traffic_source ;;
+    drill_fields: [gender, age_tier]
   }
 
   measure: count {
