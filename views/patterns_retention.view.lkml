@@ -1,7 +1,7 @@
-view: sql_runner_query {
+view: patterns_retention {
   derived_table: {
     sql: SELECT
-          order_items.user_id  AS order_items_user_id,
+          order_items.user_id  AS user_id,
           COUNT(DISTINCT order_items.id ) AS patterns_retention_ordered_items_count,
           ROUND(COALESCE(CAST( ( SUM(DISTINCT (CAST(ROUND(COALESCE(CASE WHEN  NOT COALESCE(( (DATE(order_items.returned_at , 'America/New_York')) IS NOT NULL  ), FALSE)  THEN  order_items.sale_price   ELSE NULL END
       ,0)*(1/1000*1.0), 9) AS NUMERIC) + (cast(cast(concat('0x', substr(to_hex(md5(CAST(CASE WHEN  NOT COALESCE(( (DATE(order_items.returned_at , 'America/New_York')) IS NOT NULL  ), FALSE)  THEN  order_items.id   ELSE NULL END
@@ -25,10 +25,10 @@ view: sql_runner_query {
     drill_fields: [detail*]
   }
 
-  dimension: order_items_user_id {
+  dimension: user_id {
     primary_key: yes
     type: number
-    sql: ${TABLE}.order_items_user_id ;;
+    sql: ${TABLE}.user_id ;;
   }
 
   dimension: patterns_retention_ordered_items_count {
@@ -48,7 +48,9 @@ view: sql_runner_query {
     sql: ${patterns_retention_ordered_items_count} ;;
   }
 
+
+
   set: detail {
-    fields: [order_items_user_id, patterns_retention_ordered_items_count, order_items_total_gross_revenue]
+    fields: [user_id, patterns_retention_ordered_items_count, order_items_total_gross_revenue]
   }
 }

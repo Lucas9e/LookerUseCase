@@ -100,8 +100,8 @@ view: order_items {
 
   measure: total_gross_margin {
     description: "Amount Total difference between the total revenue from completed sales and the cost of the goods that were sold "
-    type: number
-    sql: ${total_gross_revenue} - ${inventory_items.total_cost} ;;
+    type: sum
+    sql: ${order_items.sale_price} - ${inventory_items.cost} ;;
     value_format_name: usd_0
   }
 
@@ -118,6 +118,7 @@ view: order_items {
   measure: average_sale_price {
     type: average
     sql: ${sale_price} ;;
+    value_format_name: usd
   }
 
   dimension_group: shipped {
