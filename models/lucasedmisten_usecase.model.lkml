@@ -90,17 +90,19 @@ explore: inventory_items {
   }
 }
 
-explore: patterns_retention {
+
+explore: user_patterns_retention {
   join: users {
-    sql_on: ${patterns_retention.user_id} = ${users.id} ;;
+    sql_on: ${user_patterns_retention.user_id} = ${users.id} ;;
     relationship: many_to_one
   }
+
   join: order_items{
-    sql_on: ${patterns_retention.user_id} = ${users.id} ;;
+    sql_on: ${user_patterns_retention.user_id} = ${users.id} ;;
     relationship: many_to_one
   }
   join: inventory_items {
-    sql_on: ${patterns_retention.user_id} = ${users.id} ;;
+    sql_on: ${user_patterns_retention.user_id} = ${users.id} ;;
     relationship: many_to_one
   }
 }

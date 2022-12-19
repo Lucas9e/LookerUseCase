@@ -49,6 +49,11 @@ view: order_items {
   # A dimension is a groupable field that can be used to filter query results.
   # This dimension will be called "Inventory Item ID" in Explore.
 
+  measure: first_order_date {
+    type: date
+    sql: MIN(${created_raw}) ;;
+  }
+
   dimension: inventory_item_id {
     type: number
     # hidden: yes
@@ -95,7 +100,7 @@ view: order_items {
     type: sum
     sql: ${sale_price};;
     filters: [is_item_returned: "No"]
-    value_format_name: usd_0
+    value_format_name: usd
   }
 
   measure: total_gross_margin {
@@ -103,7 +108,7 @@ view: order_items {
     type: sum
     drill_fields: [inventory_items.product_brand, inventory_items.product_category]
     sql: ${order_items.sale_price} - ${inventory_items.cost} ;;
-    value_format_name: usd_0
+    value_format_name: usd
   }
 
 
