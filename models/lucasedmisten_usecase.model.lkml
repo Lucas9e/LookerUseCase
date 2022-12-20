@@ -70,10 +70,11 @@ explore: order_items {
     relationship: many_to_one
   }
 
-  join: user_patterns_retention {
-    sql_on: ${order_items.user_id} = ${user_patterns_retention.user_id} ;;
+  join: user_patterns_and_facts {
+    sql_on: ${order_items.user_id} = ${user_patterns_and_facts.user_id} ;;
     relationship: many_to_one
   }
+
 }
 
 explore: inventory_items {
@@ -91,23 +92,6 @@ explore: inventory_items {
   join: distribution_centers {
     type: left_outer
     sql_on: ${products.distribution_center_id} = ${distribution_centers.id} ;;
-    relationship: many_to_one
-  }
-}
-
-
-explore: user_patterns_retention {
-  join: users {
-    sql_on: ${user_patterns_retention.user_id} = ${users.id} ;;
-    relationship: many_to_one
-  }
-
-  join: order_items{
-    sql_on: ${user_patterns_retention.user_id} = ${users.id} ;;
-    relationship: many_to_one
-  }
-  join: inventory_items {
-    sql_on: ${user_patterns_retention.user_id} = ${users.id} ;;
     relationship: many_to_one
   }
 }

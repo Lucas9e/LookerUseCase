@@ -196,6 +196,12 @@ on the fashion.ly website"
     filters: [is_item_returned: "Yes"]
   }
 
+  measure: number_of_orders {
+    description: "Distinct number of orders"
+    type: count_distinct
+    sql: ${order_id} ;;
+  }
+
 
 
   #  Sets of fields for drilling
