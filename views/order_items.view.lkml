@@ -49,9 +49,18 @@ view: order_items {
   # A dimension is a groupable field that can be used to filter query results.
   # This dimension will be called "Inventory Item ID" in Explore.
 
-  measure: first_order_date {
+  measure: first_order {
+    description: "The date in which a customer placed his or her first order on the
+fashion.ly website"
     type: date
     sql: MIN(${created_raw}) ;;
+  }
+
+  measure: latest_order_date {
+    description: "The date in which a customer placed his or her most recent order
+on the fashion.ly website"
+    type: date
+    sql: MAX(${created_raw} ;;
   }
 
   dimension: inventory_item_id {

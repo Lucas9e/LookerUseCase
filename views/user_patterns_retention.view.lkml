@@ -71,6 +71,12 @@ view: user_patterns_retention {
     value_format_name: usd
   }
 
+#  measure: first_order_date {
+#   type: date
+#     sql: MIN(${order_items.created_raw}) ;;
+#   }
+
+
 
   set: detail {
     fields: [user_id, total_lifetime_orders, total_customers_lifetime_revenue]

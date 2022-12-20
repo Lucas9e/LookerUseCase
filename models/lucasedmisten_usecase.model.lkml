@@ -69,6 +69,11 @@ explore: order_items {
     sql_on: ${products.distribution_center_id} = ${distribution_centers.id} ;;
     relationship: many_to_one
   }
+
+  join: user_patterns_retention {
+    sql_on: ${order_items.user_id} = ${user_patterns_retention.user_id} ;;
+    relationship: many_to_one
+  }
 }
 
 explore: inventory_items {
