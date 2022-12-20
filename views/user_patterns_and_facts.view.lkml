@@ -43,6 +43,13 @@ on the fashion.ly website"
     type: number
   }
 
+  dimension: active_customer {
+    description: "Identifies whether a customer is active or not (has purchased from
+the website within the last 90 days)"
+    type: yesno
+    sql: ${days_since_last_order} < 90 ;;
+  }
+
   dimension: total_customers_lifetime_revenue {
     description: "Total Revenue by individual Customer"
     type: number
@@ -71,11 +78,6 @@ on the fashion.ly website"
     type: average
     sql: ${number_of_orders};;
     value_format: "0.00"
-  }
-
-  dimension: active_customer {
-    type: yesno
-    sql: ${days_since_last_order} < 90 ;;
   }
 
   measure: average_lifetime_revenue {
