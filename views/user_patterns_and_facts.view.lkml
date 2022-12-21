@@ -20,14 +20,12 @@ view: user_patterns_and_facts {
   }
 
   dimension: first_order {
-    description: "The date in which a customer placed his or her first order on the
-fashion.ly website"
+    description: "The date in which a customer placed his or her first order on the fashion.ly website"
     type: date
   }
 
   dimension: latest_order {
-    description: "The date in which a customer placed his or her most recent order
-on the fashion.ly website"
+    description: "The date in which a customer placed his or her most recent order on the fashion.ly website"
     type: date
   }
 
@@ -44,10 +42,15 @@ on the fashion.ly website"
   }
 
   dimension: active_customer {
-    description: "Identifies whether a customer is active or not (has purchased from
-the website within the last 90 days)"
+    description: "Identifies whether a customer is active or not (has purchased from the website within the last 90 days)"
     type: yesno
     sql: ${days_since_last_order} < 90 ;;
+  }
+
+  dimension: repeat_customer {
+    description: "Identifies whether a customer was a repeat customer or not"
+    type: yesno
+    sql: ${number_of_orders} > 1 ;;
   }
 
   dimension: total_customers_lifetime_revenue {
@@ -64,7 +67,7 @@ the website within the last 90 days)"
     sql: ${number_of_orders} ;;
   }
 
-  dimension: customer_lifetime_revenue  {
+  dimension: customer_lifetime_revenue_tiered  {
     description: "Customers grouped/tiered by their lifetime revenue"
     type: tier
     tiers: [5, 20, 50, 100, 500, 1000]
@@ -87,6 +90,12 @@ the website within the last 90 days)"
     value_format_name: usd
   }
 
+  measure: average_days_since_last_order {
+    description: "The average number of days since customers have placed their most recent orders on the website"
+    type: average
+    sql: ${days_since_last_order} ;;
+    value_format: "0"
+  }
 
 # Drill Fields
   set: detail {

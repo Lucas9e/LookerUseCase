@@ -56,6 +56,7 @@ fashion.ly website"
     sql: MIN(${created_raw}) ;;
   }
 
+
   measure: latest_order {
     description: "The date in which a customer placed his or her most recent order
 on the fashion.ly website"

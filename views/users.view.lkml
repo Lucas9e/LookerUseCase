@@ -73,6 +73,20 @@ view: users {
     sql: ${TABLE}.created_at ;;
   }
 
+  dimension: days_since_sign_up {
+    description: "The number of days since a customer has signed up on the website"
+    type: number
+    sql: DATE_DIFF(current_date(), ${created_date}, DAY);;
+
+  }
+
+  dimension: months_since_sign_up {
+    description: "The number of months since a customer has signed up on the website"
+    type: number
+    sql: DATE_DIFF(current_date(), ${created_date}, month);;
+
+  }
+
   dimension: email {
     type: string
     sql: ${TABLE}.email ;;
