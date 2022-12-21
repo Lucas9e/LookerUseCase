@@ -73,19 +73,33 @@ view: users {
     sql: ${TABLE}.created_at ;;
   }
 
+  # ADDING DIMENSION FOR KEY USE CASE 2 ##
+
   dimension: days_since_sign_up {
     description: "The number of days since a customer has signed up on the website"
     type: number
     sql: DATE_DIFF(current_date(), ${created_date}, DAY);;
-
   }
 
   dimension: months_since_sign_up {
     description: "The number of months since a customer has signed up on the website"
     type: number
     sql: DATE_DIFF(current_date(), ${created_date}, month);;
-
   }
+
+  measure: average_days_since_signup {
+    description: "Average number of days between a customer initially registering on the website and now"
+    type: average
+    sql: ${days_since_sign_up} ;;
+  }
+
+  measure: average_months_since_signup {
+    description: "Average number of months between a customer initially registering on the website and now"
+    type: average
+    sql: ${months_since_sign_up} ;;
+  }
+
+  # ENDING ADDED LOOKML ##
 
   dimension: email {
     type: string
