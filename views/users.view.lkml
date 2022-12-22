@@ -87,6 +87,22 @@ view: users {
     sql: DATE_DIFF(current_date(), ${created_date}, month);;
   }
 
+  dimension: tiered_days_since_sign_up  {
+    description: "Customers grouped/tiered by days since they signed up"
+    type: tier
+    tiers: [100, 201, 301, 401, 501, 601, 701, 801,901,1001,1101,1201,1301,1401,1501]
+    style: integer
+    sql: ${days_since_sign_up} ;;
+  }
+
+  dimension: tiered_months_since_sign_up  {
+    description: "Customers grouped/tiered by months since signed up"
+    type: tier
+    tiers: [12, 25, 37, 49]
+    style: integer
+    sql: ${months_since_sign_up} ;;
+  }
+
   measure: average_days_since_signup {
     description: "Average number of days between a customer initially registering on the website and now"
     type: average
