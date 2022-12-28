@@ -2,10 +2,14 @@ view: user_patterns_and_facts {
   derived_table: {
     explore_source: order_items {
       column: user_id {}
+      column: created_date {field:order_items.created_raw}
       column: first_order {}
       column: latest_order {}
       column: number_of_orders {}
       column: total_customers_lifetime_revenue { field: order_items.total_gross_revenue }
+      derived_column: order_sequence_num {
+        sql: RANK() OVER (PARTITION BY user_id ORDER BY created_date);;
+      }
     }
   }
 
@@ -14,8 +18,26 @@ view: user_patterns_and_facts {
     drill_fields: [detail*]
   }
 
+  dimension_group: created_date {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+  }
+
   dimension: user_id {
     primary_key: yes
+    type: number
+  }
+
+  dimension: order_sequence_number {
+    description: "The order in which a customer placed orders over their lifetime"
     type: number
   }
 

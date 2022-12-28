@@ -76,7 +76,19 @@ explore: order_items {
     relationship: many_to_one
   }
 
+  join: sequence_orders {
+    sql_on: ${order_items.order_id} = ${sequence_orders.order_id} ;;
+    relationship: many_to_one
+  }
+
+  join: cohort {
+    sql_on: ${order_items.user_id} = ${cohort.user_id} ;;
+    relationship: many_to_one
+  }
+
 }
+
+
 
 explore: inventory_items {
   join: products {
