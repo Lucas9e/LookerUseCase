@@ -37,6 +37,8 @@ explore: distribution_centers {}
 
 explore: users {}
 
+explore: sequence_orders {}
+
 explore: products {
   join: distribution_centers {
     type: left_outer
@@ -72,24 +74,13 @@ explore: order_items {
   }
 
   join: user_patterns_and_facts {
+    type: left_outer
     sql_on: ${order_items.user_id} = ${user_patterns_and_facts.user_id} ;;
     relationship: many_to_one
   }
 
-  join: sequence_orders {
-    sql_on: ${order_items.order_id} = ${sequence_orders.order_id} ;;
-    relationship: many_to_one
-  }
-
-  join: cohort {
-    sql_on: ${order_items.user_id} = ${cohort.user_id} ;;
-    relationship: many_to_one
-  }
 
 }
-
-
-
 explore: inventory_items {
   join: products {
     type: left_outer

@@ -1,3 +1,5 @@
+# Key Use Case 3 - Order Sequencing
+
 view: sequence_orders {
   view_label: "Sequence of Orders"
   derived_table: {
@@ -69,24 +71,26 @@ view: sequence_orders {
     sql: ${TABLE}.created_at  ;;
   }
 
+  # dimension: test_between_next_order {
+  #   description: "The number of days since a customer placed his or her most
+  #   recent order on the website"
+  #   type: number
+  #   sql: DATE_DIFF(${next_order_raw}, ${created_raw}, day) ;;
+  # }
+
   dimension_group: between_next_order {
+    description: "Days Between users next order"
     type: duration
     intervals: [day]
     sql_start: ${created_raw} ;;
     sql_end: ${next_order_raw} ;;
   }
 
-  # dimension: days_between_next_order {
-  #   description: "The number of days between one order and the next order"
-  #   type: number
-  #   sql: DATE_DIFF(${next_order_date}, ${created_date}, day) ;;
+  # measure: total_days_between_orders {
+  #   type: sum
+  #   filters: [has_subsequent_order: "yes"]
+  #   sql: ${test_between_next_order} ;;
   # }
-
-  measure: total_avg_days_between_orders{
-    type: sum
-    hidden: yes
-    filters: []
-  }
 
   measure: average_days_between_orders {
     type: average

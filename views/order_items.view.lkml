@@ -197,11 +197,17 @@ on the fashion.ly website"
     filters: [is_item_returned: "Yes"]
   }
 
-  measure: number_of_orders {
+  measure: customers_number_of_orders {
     description: "Distinct number of orders"
     type: count_distinct
     sql: ${order_id} ;;
   }
+
+  # measure: number_of_orders {
+  #   description: "Distinct number of orders"
+  #   type: count_distinct
+  #   sql: ${order_id} ;;
+  # }
 
 
 
