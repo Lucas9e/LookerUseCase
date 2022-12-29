@@ -99,4 +99,6 @@ view: sequence_orders {
     value_format: "0.00"
   }
 
+
+
 }
