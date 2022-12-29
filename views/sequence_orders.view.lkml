@@ -19,6 +19,10 @@ view: sequence_orders {
     GROUP BY 1, 2, 3  ;;
   }
 
+  measure: count {
+    type: count
+  }
+
   dimension: order_id {
     primary_key: yes
     type: number
@@ -86,12 +90,6 @@ view: sequence_orders {
     sql_end: ${next_order_raw} ;;
   }
 
-  # measure: total_days_between_orders {
-  #   type: sum
-  #   filters: [has_subsequent_order: "yes"]
-  #   sql: ${test_between_next_order} ;;
-  # }
-
   measure: average_days_between_orders {
     type: average
     # filters: [has_subsequent_order: "yes"]
@@ -99,6 +97,35 @@ view: sequence_orders {
     value_format: "0.00"
   }
 
+  dimension: first_time_customer {
+    type: yesno
+    sql: ${order_sequence} < 2 ;;
+  }
 
+  dimension: purchased_again_within_60_days{
+    hidden: yes
+    description: "Identifies whether a customer has purchased again within 60 days of prior purchase"
+    type: yesno
+    sql: ${days_between_next_order} < 61 ;;
+  }
+
+  measure: total_orders {
+    hidden: yes
+    type: count_distinct
+    sql: ${order_id} ;;
+  }
+
+  measure: count_purchases_60_days {
+    hidden: yes
+    type: count_distinct
+    filters: [purchased_again_within_60_days: "Yes"]
+    sql: ${order_id} ;;
+  }
+
+  measure: percentage_purchases_within_60_days {
+    type: number
+    sql: 100 * (${count_purchases_60_days} / ${total_orders}) ;;
+    value_format: "0.00\%"
+  }
 
 }
