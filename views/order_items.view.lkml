@@ -98,6 +98,7 @@ on the fashion.ly website"
   dimension: sale_price {
     type: number
     sql: ${TABLE}.sale_price ;;
+    value_format_name: usd
   }
 
   dimension: is_item_returned {
@@ -129,6 +130,7 @@ on the fashion.ly website"
   measure: total_sale_price {
     type: sum
     sql: ${sale_price} ;;
+    value_format_name: usd
   }
 
   measure: average_sale_price {
@@ -173,7 +175,7 @@ on the fashion.ly website"
     description: "Average difference between the total revenue from completed sales and the cost of the goods that were sold "
     type: number
     sql: ${total_gross_margin}/${count} ;;
-    value_format_name: usd_0
+    value_format_name: usd
   }
 
   measure: gross_margin_percenatage {

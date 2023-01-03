@@ -92,7 +92,7 @@ view: user_patterns_and_facts {
     tiers: [5, 20, 50, 100, 500, 1000]
     style: integer
     sql: ${customers_lifetime_revenue} ;;
-    value_format_name: usd_0
+    value_format_name: usd
   }
 
   measure: average_lifetime_orders {

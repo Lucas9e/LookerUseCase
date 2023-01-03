@@ -39,6 +39,8 @@ explore: users {}
 
 explore: sequence_orders {}
 
+explore: brand_comparisons {}
+
 explore: products {
   join: distribution_centers {
     type: left_outer
@@ -78,6 +80,11 @@ explore: order_items {
     sql_on: ${order_items.user_id} = ${user_patterns_and_facts.user_id} ;;
     relationship: many_to_one
   }
+
+  # join: test_PDT {
+  #   sql_on: ${order_items.order_id} = ${test_PDT.order_id} ;;
+  #   relationship: many_to_one
+  # }
 
 
 }
